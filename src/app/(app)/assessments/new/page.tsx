@@ -14,14 +14,14 @@ import { useCreateAssessment, useTemplates, useEmployees } from '@/hooks/useAsse
 
 interface Template {
   id: string;
-  name: string;
+  title: string;
   type: string;
 }
 
 interface Employee {
   id: string;
-  name: string;
-  department?: string;
+  profile: { full_name: string | null };
+  department: { name: string } | null;
 }
 
 // ---------------------------------------------------------------------------
@@ -132,8 +132,8 @@ function Section({ title, description, children }: SectionProps) {
 export default function NewAssessmentPage() {
   const router = useRouter();
   const createAssessment = useCreateAssessment();
-  const { data: templates = [] } = useTemplates() as { data: Template[] };
-  const { data: employees = [] } = useEmployees() as { data: Employee[] };
+  const { data: templates = [] } = useTemplates() as unknown as { data: Template[] };
+  const { data: employees = [] } = useEmployees() as unknown as { data: Employee[] };
 
   const {
     register,
@@ -230,8 +230,8 @@ export default function NewAssessmentPage() {
                 <option value="">Select employee...</option>
                 {(employees as Employee[]).map((emp) => (
                   <option key={emp.id} value={emp.id}>
-                    {emp.name}
-                    {emp.department ? ` — ${emp.department}` : ''}
+                    {emp.profile.full_name}
+                    {emp.department ? ` — ${emp.department.name}` : ''}
                   </option>
                 ))}
               </select>
@@ -245,7 +245,7 @@ export default function NewAssessmentPage() {
                 <option value="">No template (custom)</option>
                 {(templates as Template[]).map((t) => (
                   <option key={t.id} value={t.id}>
-                    {t.name}
+                    {t.title}
                     {t.type ? ` (${t.type})` : ''}
                   </option>
                 ))}
