@@ -564,6 +564,20 @@ export function useUpdateGoal() {
   });
 }
 
+export function useDeleteGoal() {
+  const queryClient = useQueryClient();
+  return useMutation<void, Error, string>({
+    mutationFn: async (id) => {
+      const supabase = createClient();
+      const { error } = await supabase.from('goals').delete().eq('id', id);
+      if (error) throw error;
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['goals'] });
+    },
+  });
+}
+
 // ============================================================
 // NOTIFICATIONS
 // ============================================================
