@@ -196,8 +196,8 @@ export default function ReportsPage() {
   const [sortDir, setSortDir] = useState<SortDir>('desc');
   const [page, setPage] = useState(1);
 
-  const { data: stats } = useDashboardStats(period) as { data: DashboardStats | undefined };
-  const { data: deptPerf = [] } = useDepartmentPerformance(period) as {
+  const { data: stats } = useDashboardStats() as { data: DashboardStats | undefined };
+  const { data: deptPerf = [] } = useDepartmentPerformance() as {
     data: DepartmentPerf[];
   };
   const { data: assessments = [] } = useAssessments() as { data: Assessment[] };

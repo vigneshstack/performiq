@@ -132,8 +132,10 @@ function Section({ title, description, children }: SectionProps) {
 export default function NewAssessmentPage() {
   const router = useRouter();
   const createAssessment = useCreateAssessment();
-  const { data: templates = [] } = useTemplates() as unknown as { data: Template[] };
-  const { data: employees = [] } = useEmployees() as unknown as { data: Employee[] };
+  const { data: rawTemplates = [] } = useTemplates();
+  const { data: rawEmployees = [] } = useEmployees();
+  const templates = rawTemplates as unknown as Template[];
+  const employees = rawEmployees as unknown as Employee[];
 
   const {
     register,
@@ -237,7 +239,7 @@ export default function NewAssessmentPage() {
               </FieldLabel>
               <select id="employee_id" {...register('employee_id')} className={selectClass}>
                 <option value="">Select employee...</option>
-                {(employees as Employee[]).map((emp) => (
+                {employees.map((emp) => (
                   <option key={emp.id} value={emp.id}>
                     {emp.profile.full_name}
                     {emp.department ? ` — ${emp.department.name}` : ''}
@@ -252,7 +254,7 @@ export default function NewAssessmentPage() {
               <FieldLabel htmlFor="template_id">Assessment Template</FieldLabel>
               <select id="template_id" {...register('template_id')} className={selectClass}>
                 <option value="">No template (custom)</option>
-                {(templates as Template[]).map((t) => (
+                {templates.map((t) => (
                   <option key={t.id} value={t.id}>
                     {t.title}
                     {t.type ? ` (${t.type})` : ''}
