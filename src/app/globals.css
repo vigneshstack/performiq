@@ -1,0 +1,36 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --font-dm-sans: 'DM Sans', sans-serif;
+    --font-dm-mono: 'DM Mono', monospace;
+  }
+
+  * {
+    box-sizing: border-box;
+    border-color: theme('colors.zinc.200');
+  }
+
+  html {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  body {
+    font-feature-settings: "rlig" 1, "calt" 1;
+  }
+
+  ::-webkit-scrollbar { width: 6px; height: 6px; }
+  ::-webkit-scrollbar-track { background: #f4f4f5; }
+  ::-webkit-scrollbar-thumb { background: #d4d4d8; border-radius: 999px; }
+  ::-webkit-scrollbar-thumb:hover { background: #a1a1aa; }
+}
+
+@keyframes animateIn {
+  from { opacity: 0; transform: scale(0.95); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+.animate-in { animation: animateIn 0.2s ease-out; }
