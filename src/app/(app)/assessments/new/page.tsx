@@ -168,8 +168,17 @@ export default function NewAssessmentPage() {
 
   const onSubmit = async (values: AssessmentFormValues) => {
     // Sanitise optional empty strings
+    const typeLabels: Record<string, string> = {
+      annual: 'Annual Review',
+      quarterly: 'Quarterly Review',
+      probation: 'Probation Review',
+      peer: 'Peer Review',
+      self: 'Self Assessment',
+      project: 'Project Review',
+    };
     const payload = {
       ...values,
+      title: `${typeLabels[values.type] ?? values.type} — ${new Date().getFullYear()}`,
       overall_score:
         values.overall_score === '' ? undefined : Number(values.overall_score),
       template_id: values.template_id || undefined,
